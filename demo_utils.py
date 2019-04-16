@@ -120,5 +120,6 @@ def demo_callbacks(app, demo_mode):
         @app.callback(Output('div-total-step-count', 'children'),
                       [Input('dropdown-demo-dataset', 'value')])
         def total_step_count(dataset_name):
-            dataset = data_dict['softmax'][dataset_name]
-            return html.H6(f"Total Steps: {dataset['step'].iloc[-1]}", style={'margin-top': '3px'})
+            if dataset_name is not None:
+                dataset = data_dict['softmax'][dataset_name]
+                return html.H6(f"Total Steps: {dataset['step'].iloc[-1]}", style={'margin-top': '3px'})

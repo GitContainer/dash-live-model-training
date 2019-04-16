@@ -1,5 +1,3 @@
-import os
-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -15,15 +13,7 @@ LOGFILE = 'examples/run_log.csv'
 app = dash.Dash(__name__)
 server = app.server
 
-# Custom Script for Heroku, switch to demo mode when hosted on Heroku
-if 'DYNO' in os.environ:
-    app.scripts.append_script({
-        'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'
-    })
-    demo_mode = True
-else:
-    demo_mode = False
-
+demo_mode = True
 
 def div_graph(name):
     """Generates an html Div containing graph and control options for smoothing and display, given the name"""
@@ -386,18 +376,6 @@ def update_div_current_cross_entropy_value(run_log_json):
             html.Div(f"Training: {run_log_df['train cross entropy'].iloc[-1]:.4f}"),
             html.Div(f"Validation: {run_log_df['val cross entropy'].iloc[-1]:.4f}")
         ]
-
-
-external_css = [
-    "https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css",  # Normalize the CSS
-    "https://fonts.googleapis.com/css?family=Open+Sans|Roboto"  # Fonts
-    "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
-    "https://cdn.rawgit.com/xhlulu/0acba79000a3fd1e6f552ed82edb8a64/raw/dash_template.css",
-    "https://rawgit.com/plotly/dash-live-model-training/master/custom_styles.css"
-]
-
-for css in external_css:
-    app.css.append_css({"external_url": css})
 
 # Running the server
 if __name__ == '__main__':
